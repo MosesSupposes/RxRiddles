@@ -9,6 +9,17 @@ object Riddle1 {
    * Use case: You want to transform some value to the reactive world.
    */
   fun solve(value: Int): Observable<Int> {
-    TODO()
+    val searchButton = { setOnClickListener: fun (): Unit }
+
+    Observable.create { emitter ->
+      searchButton.setOnClickListener {
+        println(value)
+        emitter.onNext(value)
+      }
+
+      emitter.setCancellable {
+        searchButton.setOnClickListener(null)
+      }
+    }
   }
 }
